@@ -1,0 +1,27 @@
+services:
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight
+    restart: always
+    ports:
+      - "5540:8001" # RedisInsight UI
+    environment:
+      - RIA_ACCEPT_LICENSE=yes
+    volumes:
+      - redisinsight_data:/db
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "8001:80" # pgAdmin UI
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  redisinsight_data:
+  pgadmin_data:
