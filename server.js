@@ -8,7 +8,10 @@ const CONFIG = {
     host: process.env.REDIS_HOST || "localhost",
     port: parseInt(process.env.REDIS_PORT, 10) || 6379,
     password: process.env.REDIS_PASSWORD || undefined,
-    tls: process.env.REDIS_TLS === "true" ? { rejectUnauthorized: true } : undefined,
+    tls:
+      process.env.REDIS_TLS === "true"
+        ? { rejectUnauthorized: true }
+        : undefined,
     maxRetriesPerRequest: 3,
     retryStrategy(times) {
       const delay = Math.min(times * 500, 30000);
@@ -87,7 +90,7 @@ async function updatePrice(symbol, price, retries = 3) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       console.log("update price", { symbol, price });
-      await redis.set(`price1:${symbol}`, String(price));
+      await redis.set(`price:${symbol}`, String(price));
       return { success: true };
     } catch (err) {
       console.error(
