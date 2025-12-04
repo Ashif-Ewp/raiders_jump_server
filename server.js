@@ -8,7 +8,7 @@ const CONFIG = {
     host: process.env.REDIS_HOST || "localhost",
     port: parseInt(process.env.REDIS_PORT, 10) || 6379,
     password: process.env.REDIS_PASSWORD || undefined,
-    tls: process.env.REDIS_TLS === "true" ? {} : undefined,
+    tls: process.env.REDIS_TLS === "true" ? { rejectUnauthorized: true } : undefined,
     maxRetriesPerRequest: 3,
     retryStrategy(times) {
       const delay = Math.min(times * 500, 30000);
