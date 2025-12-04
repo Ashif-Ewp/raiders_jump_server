@@ -86,6 +86,7 @@ function validatePriceUpdate(data) {
 async function updatePrice(symbol, price, retries = 3) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
+      console.log("update price", { symbol, price });
       await redis.set(`price1:${symbol}`, String(price));
       return { success: true };
     } catch (err) {
@@ -165,6 +166,7 @@ wss.on("connection", (ws, req) => {
     }
 
     const { symbol, price } = data;
+    console.log({ symbol, price });
     const result = await updatePrice(symbol, price);
 
     if (result.success) {
