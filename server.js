@@ -86,7 +86,7 @@ function validatePriceUpdate(data) {
 async function updatePrice(symbol, price, retries = 3) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
-      await redis.set(`price:${symbol}`, String(price));
+      await redis.set(`price1:${symbol}`, String(price));
       return { success: true };
     } catch (err) {
       console.error(
